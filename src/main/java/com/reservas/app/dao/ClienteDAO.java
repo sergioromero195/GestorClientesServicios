@@ -25,4 +25,18 @@ public class ClienteDAO {
             em.close();
         }
     }
+
+    public Cliente buscarPorId(Long id) {
+        EntityManagerFactory fabrica =
+                JpaUtil.getEntityManagerFactory();
+
+        EntityManager em =
+                fabrica.createEntityManager();
+
+        try {
+            return em.find(Cliente.class, id);
+        } finally {
+            em.close();
+        }
+    }
 }
