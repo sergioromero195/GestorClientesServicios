@@ -4,6 +4,7 @@ import com.reservas.app.config.JpaUtil;
 import com.reservas.app.model.Cliente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
 
@@ -38,5 +39,37 @@ public class ClienteDAO {
         } finally {
             em.close();
         }
+    }
+
+    public void guardar(Cliente cliente){
+
+        EntityManagerFactory fabrica = JpaUtil.getEntityManagerFactory();
+
+       EntityManager em = fabrica.createEntityManager();
+
+      EntityTransaction tx = em.getTransaction();
+
+      try{
+
+          tx.begin();
+
+          em.persist(cliente);
+
+          tx.commit();
+
+
+      }catch(RuntimeException error){
+
+          if(tx.isActive()){
+              tx.rollback();
+
+          }
+          throw error;
+
+      }finally {
+          em.close();
+      }
+
+
     }
 }
