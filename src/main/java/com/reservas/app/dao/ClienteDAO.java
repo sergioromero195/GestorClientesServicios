@@ -70,6 +70,78 @@ public class ClienteDAO {
           em.close();
       }
 
+    }
 
+
+    public boolean actualizar(Cliente datosNuevos) {
+        if (datosNuevos.getId() == null) {
+            throw new IllegalArgumentException(
+                    "El cliente debe tener un ID para actualizarse."
+            );
+        }
+
+        EntityManagerFactory fabrica =
+                JpaUtil.getEntityManagerFactory();
+
+        EntityManager em =
+                fabrica.createEntityManager();
+
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+
+            Cliente existente =
+                    em.find(Cliente.class, datosNuevos.getId());
+
+            if (existente == null) {
+                tx.rollback();
+                return false;
+            }
+
+            existente.setNombre(datosNuevos.getNombre());
+            existente.setEmail(datosNuevos.getEmail());
+            existente.setTelefono(datosNuevos.getTelefono());
+
+            tx.commit();
+            return true;
+        } catch (RuntimeException error) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw error;
+        } finally {
+            em.close();
+        }
+    }
+
+
+    public boolean eliminar(Long id) {
+        EntityManagerFactory fabrica =
+                JpaUtil.getEntityManagerFactory();
+        EntityManager em = fabrica.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+
+            Cliente cliente = em.find(Cliente.class, id);
+
+            if (cliente == null) {
+                tx.rollback();
+                return false;
+            }
+
+            em.remove(cliente);
+            tx.commit();
+            return true;
+        } catch (RuntimeException error) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw error;
+        } finally {
+            em.close();
+        }
     }
 }
