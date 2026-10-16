@@ -40,6 +40,11 @@ public class ReservaDAO {
     }
 
     public void guardar(Reserva reserva) {
+        validarDatosReserva(reserva);
+
+        if (reserva.getId() != null) {
+            throw new IllegalArgumentException("Una reserva nueva no debe tener un ID asignado.");
+        }
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
         EntityManager em = fabrica.createEntityManager();
@@ -74,11 +79,16 @@ public class ReservaDAO {
     }
 
     public boolean actualizar(Reserva datosNuevos) {
+        if (datosNuevos == null) {
+            throw new IllegalArgumentException("La reserva no puede ser null.");
+        }
+
         if (datosNuevos.getId() == null) {
             throw new IllegalArgumentException(
                     "La reserva debe tener un ID para actualizarse."
             );
         }
+        validarDatosReserva(datosNuevos);
 
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
@@ -155,4 +165,23 @@ public class ReservaDAO {
             em.close();
         }
     }
+
+    private void validarDatosReserva(Reserva reserva) {
+        if (reserva == null) {
+            throw new IllegalArgumentException("La reserva no puede ser null.");
+        }
+        if (reserva.getFechaReserva() == null) {
+            throw new IllegalArgumentException("La fecha de la reserva es obligatoria.");
+        }
+        if (reserva.getEstado() == null || reserva.getEstado().isBlank()) {
+            throw new IllegalArgumentException("El estado de la reserva es obligatorio.");
+        }
+        if (reserva.getCliente() == null || reserva.getCliente().getId() == null) {
+            throw new IllegalArgumentException("La reserva debe tener un cliente con ID.");
+        }
+        if (reserva.getServicio() == null || reserva.getServicio().getId() == null) {
+            throw new IllegalArgumentException("La reserva debe tener un servicio con ID.");
+        }
+    }
 }
+

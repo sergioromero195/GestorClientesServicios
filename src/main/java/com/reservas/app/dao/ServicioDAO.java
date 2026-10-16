@@ -26,6 +26,9 @@ public class ServicioDAO {
     }
 
     public Servicio buscarPorId(Long id) {
+
+        validarId(id);
+
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
         EntityManager em = fabrica.createEntityManager();
@@ -38,6 +41,16 @@ public class ServicioDAO {
     }
 
     public void guardar(Servicio servicio) {
+
+        validarDatosServicio(servicio);
+
+        if(servicio.getId() != null){
+
+            throw  new IllegalArgumentException("Un servicio nuevo no debe tener un ID asignado.");
+
+        }
+
+
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
         EntityManager em = fabrica.createEntityManager();
@@ -58,11 +71,10 @@ public class ServicioDAO {
     }
 
     public boolean actualizar(Servicio datosNuevos) {
-        if (datosNuevos.getId() == null) {
-            throw new IllegalArgumentException(
-                    "El servicio debe tener un ID para actualizarse."
-            );
-        }
+
+        validarDatosServicio(datosNuevos);
+
+        validarId(datosNuevos.getId());
 
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
@@ -97,6 +109,9 @@ public class ServicioDAO {
     }
 
     public boolean eliminar(Long id) {
+
+        validarId(id);
+
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
         EntityManager em = fabrica.createEntityManager();
@@ -123,5 +138,34 @@ public class ServicioDAO {
         } finally {
             em.close();
         }
+    }
+
+    private void validarDatosServicio(Servicio servicio) {
+        if (servicio == null) {
+            throw new IllegalArgumentException("El servicio no puede ser null.");
+        }
+
+        if (servicio.getNombre() == null || servicio.getNombre().isBlank()) {
+            throw new IllegalArgumentException("El nombre del servicio es obligatorio.");
+        }
+
+        if (servicio.getPrecio() == null) {
+            throw new IllegalArgumentException("El precio del servicio es obligatorio.");
+        }
+
+        if (servicio.getPrecio().signum() < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo.");
+        }
+    }
+
+    private void validarId(Long id){
+
+        if(id == null){
+
+            throw new IllegalArgumentException("El ID del servicio no puede ser null");
+
+
+        }
+
     }
 }

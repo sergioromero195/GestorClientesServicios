@@ -28,6 +28,10 @@ public class ClienteDAO {
     }
 
     public Cliente buscarPorId(Long id) {
+
+        validarId(id);
+
+
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
 
@@ -42,6 +46,16 @@ public class ClienteDAO {
     }
 
     public void guardar(Cliente cliente){
+
+        validarDatosCliente(cliente);
+
+        if (cliente.getId() != null) {
+            throw new IllegalArgumentException(
+                    "Un cliente nuevo no debe tener un ID asignado."
+            );
+        }
+
+
 
         EntityManagerFactory fabrica = JpaUtil.getEntityManagerFactory();
 
@@ -74,11 +88,10 @@ public class ClienteDAO {
 
 
     public boolean actualizar(Cliente datosNuevos) {
-        if (datosNuevos.getId() == null) {
-            throw new IllegalArgumentException(
-                    "El cliente debe tener un ID para actualizarse."
-            );
-        }
+
+        validarDatosCliente(datosNuevos);
+
+       validarId(datosNuevos.getId());
 
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
@@ -117,6 +130,9 @@ public class ClienteDAO {
 
 
     public boolean eliminar(Long id) {
+
+        validarId(id);
+
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
         EntityManager em = fabrica.createEntityManager();
@@ -144,4 +160,41 @@ public class ClienteDAO {
             em.close();
         }
     }
+
+    private void validarDatosCliente(Cliente cliente){
+
+        if(cliente == null){
+
+            throw new IllegalArgumentException("El cliente no puede ser null");
+
+        }
+
+        if (cliente.getNombre() == null || cliente.getNombre().isBlank()){
+
+            throw new IllegalArgumentException("El nombre es obligatorio.");
+
+        }
+
+        if(cliente.getEmail() == null || cliente.getEmail().isBlank()){
+
+
+            throw  new IllegalArgumentException("El email es obligatorio.");
+        }
+
+
+    }
+
+    private void validarId(Long id){
+
+        if(id == null){
+
+            throw new IllegalArgumentException("El ID del cliente no puede ser null.");
+
+        }
+
+
+
+    }
+
+
 }
