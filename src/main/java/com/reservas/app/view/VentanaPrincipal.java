@@ -79,7 +79,28 @@ public class VentanaPrincipal extends JFrame {
                         }
                     }
                 }
+
+
         );
+
+        serviciosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                VentanaServicios ventanaServicios = new VentanaServicios();
+                ventanaServicios.setVisible(true);
+
+            }
+        });
+
+        reservasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evento) {
+                VentanaReservas ventanaReservas = new VentanaReservas();
+                ventanaReservas.setVisible(true);
+            }
+        });
+
     }
 
     private void cargarClientes() {
@@ -225,6 +246,8 @@ public class VentanaPrincipal extends JFrame {
     private JTable tabla;
     private JButton limpiarButton;
     private JPanel panelPrincipal;
+    private JButton serviciosButton;
+    private JButton reservasButton;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
