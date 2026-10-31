@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class VentanaReservas extends JFrame {
 
@@ -26,7 +28,8 @@ public class VentanaReservas extends JFrame {
             new ReservaController();
 
     private final JTextField fechaField = new JTextField(12);
-    private final JTextField estadoField = new JTextField(15);
+    private final JComboBox<String> estadoComboBox =
+            new JComboBox<>(new String[]{"Pendiente", "Confirmada", "Cancelada"});
 
     private final JComboBox<Cliente> clienteComboBox =
             new JComboBox<>();
@@ -55,6 +58,7 @@ public class VentanaReservas extends JFrame {
             }
         });
 
+        estadoComboBox.setSelectedIndex(-1);
         construirInterfaz();
         configurarListasDesplegables();
         cargarClientesYServicios();
@@ -88,7 +92,7 @@ public class VentanaReservas extends JFrame {
                 formulario, restricciones, 0, "Fecha (AAAA-MM-DD):", fechaField
         );
         agregarCampo(
-                formulario, restricciones, 1, "Estado:", estadoField
+                formulario, restricciones, 1, "Estado:", estadoComboBox
         );
         agregarCampo(
                 formulario, restricciones, 2, "Cliente:", clienteComboBox
@@ -238,11 +242,16 @@ public class VentanaReservas extends JFrame {
             }
         });
 
-        reservasTabla.getSelectionModel().addListSelectionListener(evento -> {
-            if (!evento.getValueIsAdjusting()) {
-                mostrarReservaSeleccionada();
-            }
-        });
+        reservasTabla.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent evento) {
+                        if (!evento.getValueIsAdjusting()) {
+                            mostrarReservaSeleccionada();
+                        }
+                    }
+                }
+        );
     }
 
     private void cargarReservas() {
@@ -283,7 +292,7 @@ public class VentanaReservas extends JFrame {
 
         reservaSeleccionadaId = reserva.getId();
         fechaField.setText(reserva.getFechaReserva().toString());
-        estadoField.setText(reserva.getEstado());
+        estadoComboBox.setSelectedItem(reserva.getEstado());
 
         seleccionarCliente(reserva.getCliente().getId());
         seleccionarServicio(reserva.getServicio().getId());
@@ -404,12 +413,11 @@ public class VentanaReservas extends JFrame {
             );
         }
 
-        String estado = estadoField.getText().trim();
+        String estado = (String) estadoComboBox.getSelectedItem();
 
-        if (estado.isEmpty()) {
-            throw new IllegalArgumentException("El estado es obligatorio.");
+        if (estado == null) {
+            throw new IllegalArgumentException("Selecciona un estado.");
         }
-
         Cliente cliente = (Cliente) clienteComboBox.getSelectedItem();
         Servicio servicio = (Servicio) servicioComboBox.getSelectedItem();
 
@@ -430,7 +438,7 @@ public class VentanaReservas extends JFrame {
 
     private void limpiarFormulario() {
         fechaField.setText("");
-        estadoField.setText("");
+        estadoComboBox.setSelectedIndex(-1);
         clienteComboBox.setSelectedIndex(-1);
         servicioComboBox.setSelectedIndex(-1);
 

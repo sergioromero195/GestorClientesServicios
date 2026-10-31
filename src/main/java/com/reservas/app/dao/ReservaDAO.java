@@ -173,8 +173,14 @@ public class ReservaDAO {
         if (reserva.getFechaReserva() == null) {
             throw new IllegalArgumentException("La fecha de la reserva es obligatoria.");
         }
-        if (reserva.getEstado() == null || reserva.getEstado().isBlank()) {
-            throw new IllegalArgumentException("El estado de la reserva es obligatorio.");
+        String estado = reserva.getEstado();
+
+        if (!"Pendiente".equals(estado)
+                && !"Confirmada".equals(estado)
+                && !"Cancelada".equals(estado)) {
+            throw new IllegalArgumentException(
+                    "El estado debe ser Pendiente, Confirmada o Cancelada."
+            );
         }
         if (reserva.getCliente() == null || reserva.getCliente().getId() == null) {
             throw new IllegalArgumentException("La reserva debe tener un cliente con ID.");
