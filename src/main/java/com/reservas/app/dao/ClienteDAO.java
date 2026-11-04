@@ -148,6 +148,21 @@ public class ClienteDAO {
                 return false;
             }
 
+
+            Long cantidadReservas = em.createQuery(
+                            "SELECT COUNT(r) FROM Reserva r WHERE r.cliente.id = :id",
+                            Long.class
+                    )
+                    .setParameter("id", id)
+                    .getSingleResult();
+
+            if (cantidadReservas > 0) {
+                throw new IllegalStateException(
+                        "No se puede eliminar el cliente porque tiene reservas asociadas."
+                );
+            }
+
+
             em.remove(cliente);
             tx.commit();
             return true;
@@ -161,27 +176,62 @@ public class ClienteDAO {
         }
     }
 
-    private void validarDatosCliente(Cliente cliente){
+    private void validarDatosCliente(Cliente cliente) {
 
-        if(cliente == null){
-
-            throw new IllegalArgumentException("El cliente no puede ser null");
-
+        if (cliente == null) {
+            throw new IllegalArgumentException(
+                    "El cliente no puede ser null."
+            );
         }
 
-        if (cliente.getNombre() == null || cliente.getNombre().isBlank()){
-
-            throw new IllegalArgumentException("El nombre es obligatorio.");
-
+        if (cliente.getNombre() == null
+                || cliente.getNombre().isBlank()) {
+            throw new IllegalArgumentException(
+                    "El nombre es obligatorio."
+            );
         }
 
-        if(cliente.getEmail() == null || cliente.getEmail().isBlank()){
-
-
-            throw  new IllegalArgumentException("El email es obligatorio.");
+        if (cliente.getEmail() == null
+                || cliente.getEmail().isBlank()) {
+            throw new IllegalArgumentException(
+                    "El email es obligatorio."
+            );
         }
 
+        // Eliminar espacios al principio y al final
+        cliente.setNombre(cliente.getNombre().trim());
+        cliente.setEmail(cliente.getEmail().trim());
 
+        if (cliente.getTelefono() != null) {
+            cliente.setTelefono(cliente.getTelefono().trim());
+        }
+
+        if (cliente.getNombre().length() > 100) {
+            throw new IllegalArgumentException(
+                    "El nombre no puede superar los 100 caracteres."
+            );
+        }
+
+        if (cliente.getEmail().length() > 100) {
+            throw new IllegalArgumentException(
+                    "El email no puede superar los 100 caracteres."
+            );
+        }
+
+        if (!cliente.getEmail().matches(
+                "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            throw new IllegalArgumentException(
+                    "El email debe tener un formato válido."
+            );
+        }
+
+        if (cliente.getTelefono() != null
+                && !cliente.getTelefono().isBlank()
+                && !cliente.getTelefono().matches("[0-9+() -]{7,20}")) {
+            throw new IllegalArgumentException(
+                    "El teléfono no tiene un formato válido."
+            );
+        }
     }
 
     private void validarId(Long id){

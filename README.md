@@ -12,13 +12,7 @@ Este proyecto es una aplicación de escritorio para gestionar clientes, servicio
 
 ## Preparar la base de datos
 
-La aplicación se conecta a una base de datos local llamada `gestor_reservas_db`. Si todavía no existe, hay que crearla desde MySQL Workbench:
-
-```sql
-CREATE DATABASE gestor_reservas_db;
-```
-
-Hibernate crea o actualiza las tablas al iniciar la aplicación. La configuración de la conexión está en `src/main/resources/META-INF/persistence.xml`.
+La aplicación se conecta a una base de datos local llamada `gestor_reservas_db`. Para crear la base de datos y sus tablas, abre `database.sql` en MySQL Workbench y ejecútalo. El script usa `CREATE ... IF NOT EXISTS`, por lo que no borra tablas ni datos existentes. Hibernate también está configurado para actualizar el esquema al iniciar la aplicación. La configuración de la conexión está en `src/main/resources/META-INF/persistence.xml`.
 
 También hay que configurar las variables de entorno `DB_USER` y `DB_PASSWORD` con el usuario y la contraseña de MySQL. En IntelliJ se pueden añadir en la configuración de ejecución de `Main`. No se deben subir contraseñas reales al repositorio.
 

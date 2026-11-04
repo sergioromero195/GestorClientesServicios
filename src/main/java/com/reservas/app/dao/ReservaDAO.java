@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ReservaDAO {
@@ -173,15 +174,32 @@ public class ReservaDAO {
         if (reserva.getFechaReserva() == null) {
             throw new IllegalArgumentException("La fecha de la reserva es obligatoria.");
         }
+
+        if (reserva.getFechaReserva().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException(
+                    "La fecha de la reserva no puede ser anterior a hoy."
+            );
+        }
+
         String estado = reserva.getEstado();
 
-        if (!"Pendiente".equals(estado)
-                && !"Confirmada".equals(estado)
-                && !"Cancelada".equals(estado)) {
+        if (estado == null || estado.isBlank()) {
+            throw new IllegalArgumentException(
+                    "El estado de la reserva es obligatorio."
+            );
+        }
+
+        estado = estado.trim();
+
+        if (!estado.equals("Pendiente")
+                && !estado.equals("Confirmada")
+                && !estado.equals("Cancelada")) {
             throw new IllegalArgumentException(
                     "El estado debe ser Pendiente, Confirmada o Cancelada."
             );
         }
+
+        reserva.setEstado(estado);
         if (reserva.getCliente() == null || reserva.getCliente().getId() == null) {
             throw new IllegalArgumentException("La reserva debe tener un cliente con ID.");
         }

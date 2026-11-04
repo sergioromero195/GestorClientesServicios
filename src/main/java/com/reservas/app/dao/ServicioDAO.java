@@ -114,6 +114,7 @@ public class ServicioDAO {
 
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
+
         EntityManager em = fabrica.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -127,45 +128,92 @@ public class ServicioDAO {
                 return false;
             }
 
+            Long cantidadReservas = em.createQuery(
+                            "SELECT COUNT(r) FROM Reserva r WHERE r.servicio.id = :id",
+                            Long.class
+                    )
+                    .setParameter("id", id)
+                    .getSingleResult();
+
+            if (cantidadReservas > 0) {
+                throw new IllegalStateException(
+                        "No se puede eliminar el servicio porque tiene reservas asociadas."
+                );
+            }
+
             em.remove(servicio);
             tx.commit();
+
             return true;
+
         } catch (RuntimeException error) {
             if (tx.isActive()) {
                 tx.rollback();
             }
             throw error;
+
         } finally {
             em.close();
         }
     }
 
     private void validarDatosServicio(Servicio servicio) {
+
         if (servicio == null) {
-            throw new IllegalArgumentException("El servicio no puede ser null.");
+            throw new IllegalArgumentException(
+                    "El servicio no puede ser null."
+            );
         }
 
-        if (servicio.getNombre() == null || servicio.getNombre().isBlank()) {
-            throw new IllegalArgumentException("El nombre del servicio es obligatorio.");
+        if (servicio.getNombre() == null
+                || servicio.getNombre().isBlank()) {
+            throw new IllegalArgumentException(
+                    "El nombre del servicio es obligatorio."
+            );
+        }
+
+        // Limpiar espacios
+        servicio.setNombre(servicio.getNombre().trim());
+
+        if (servicio.getDescripcion() != null) {
+            servicio.setDescripcion(
+                    servicio.getDescripcion().trim()
+            );
+        }
+
+        if (servicio.getNombre().length() > 255) {
+            throw new IllegalArgumentException(
+                    "El nombre del servicio no puede superar los 255 caracteres."
+            );
         }
 
         if (servicio.getPrecio() == null) {
-            throw new IllegalArgumentException("El precio del servicio es obligatorio.");
+            throw new IllegalArgumentException(
+                    "El precio del servicio es obligatorio."
+            );
         }
 
         if (servicio.getPrecio().signum() < 0) {
-            throw new IllegalArgumentException("El precio no puede ser negativo.");
+            throw new IllegalArgumentException(
+                    "El precio no puede ser negativo."
+            );
+        }
+
+        if (servicio.getPrecio()
+                .stripTrailingZeros()
+                .scale() > 2) {
+            throw new IllegalArgumentException(
+                    "El precio solo puede tener dos decimales."
+            );
         }
     }
 
-    private void validarId(Long id){
+    private void validarId(Long id) {
 
-        if(id == null){
-
-            throw new IllegalArgumentException("El ID del servicio no puede ser null");
-
-
+        if (id == null) {
+            throw new IllegalArgumentException(
+                    "El ID del servicio no puede ser null."
+            );
         }
-
     }
 }
