@@ -60,6 +60,7 @@ public class VentanaReservas extends JFrame {
 
         estadoComboBox.setSelectedIndex(-1);
         construirInterfaz();
+        configurarEstilo();
         configurarListasDesplegables();
         cargarClientesYServicios();
         conectarEventos();
@@ -67,6 +68,45 @@ public class VentanaReservas extends JFrame {
 
         pack();
         setLocationRelativeTo(null);
+    }
+
+    private void configurarEstilo() {
+        Color fondo = new Color(245, 247, 250);
+        Color azul = new Color(45, 104, 196);
+        Color verde = new Color(46, 125, 50);
+        Color rojo = new Color(198, 40, 40);
+        Color gris = new Color(90, 99, 110);
+        Font fuente = new Font("Segoe UI", Font.PLAIN, 14);
+
+        getContentPane().setBackground(fondo);
+        fechaField.setFont(fuente);
+        estadoComboBox.setFont(fuente);
+        clienteComboBox.setFont(fuente);
+        servicioComboBox.setFont(fuente);
+
+        configurarBoton(guardarButton, verde);
+        configurarBoton(actualizarButton, azul);
+        configurarBoton(eliminarButton, rojo);
+        configurarBoton(limpiarButton, gris);
+
+        reservasTabla.setFont(fuente);
+        reservasTabla.setRowHeight(28);
+        reservasTabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+        reservasTabla.getTableHeader().setBackground(new Color(224, 232, 244));
+        reservasTabla.getTableHeader().setForeground(new Color(35, 45, 60));
+        reservasTabla.setGridColor(new Color(220, 225, 232));
+        reservasTabla.setSelectionBackground(new Color(207, 224, 247));
+        reservasTabla.setSelectionForeground(Color.BLACK);
+    }
+
+    private void configurarBoton(JButton boton, Color color) {
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        boton.setBackground(color);
+        boton.setForeground(Color.WHITE);
+        boton.setFocusPainted(false);
+        boton.setBorderPainted(false);
+        boton.setOpaque(true);
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void construirInterfaz() {

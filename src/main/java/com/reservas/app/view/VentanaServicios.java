@@ -45,11 +45,50 @@ public class VentanaServicios extends JFrame {
         });
 
         construirInterfaz();
+        configurarEstilo();
         conectarEventos();
         cargarServicios();
 
         pack();
         setLocationRelativeTo(null);
+    }
+
+    private void configurarEstilo() {
+        Color fondo = new Color(245, 247, 250);
+        Color azul = new Color(45, 104, 196);
+        Color verde = new Color(46, 125, 50);
+        Color rojo = new Color(198, 40, 40);
+        Color gris = new Color(90, 99, 110);
+        Font fuente = new Font("Segoe UI", Font.PLAIN, 14);
+
+        getContentPane().setBackground(fondo);
+        nombreField.setFont(fuente);
+        descripcionField.setFont(fuente);
+        precioField.setFont(fuente);
+
+        configurarBoton(guardarButton, verde);
+        configurarBoton(actualizarButton, azul);
+        configurarBoton(eliminarButton, rojo);
+        configurarBoton(limpiarButton, gris);
+
+        serviciosTabla.setFont(fuente);
+        serviciosTabla.setRowHeight(28);
+        serviciosTabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+        serviciosTabla.getTableHeader().setBackground(new Color(224, 232, 244));
+        serviciosTabla.getTableHeader().setForeground(new Color(35, 45, 60));
+        serviciosTabla.setGridColor(new Color(220, 225, 232));
+        serviciosTabla.setSelectionBackground(new Color(207, 224, 247));
+        serviciosTabla.setSelectionForeground(Color.BLACK);
+    }
+
+    private void configurarBoton(JButton boton, Color color) {
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        boton.setBackground(color);
+        boton.setForeground(Color.WHITE);
+        boton.setFocusPainted(false);
+        boton.setBorderPainted(false);
+        boton.setOpaque(true);
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void construirInterfaz() {

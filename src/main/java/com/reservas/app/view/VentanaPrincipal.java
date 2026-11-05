@@ -1,5 +1,7 @@
 package com.reservas.app.view;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.reservas.app.controller.ClienteController;
 import com.reservas.app.model.Cliente;
 
@@ -22,6 +24,7 @@ public class VentanaPrincipal extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         configurarTabla();
+        configurarEstilo();
         conectarEventos();
         cargarClientes();
 
@@ -40,6 +43,49 @@ public class VentanaPrincipal extends JFrame {
             }
         });
         tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    private void configurarEstilo() {
+        Color fondo = new Color(245, 247, 250);
+        Color azul = new Color(45, 104, 196);
+        Color verde = new Color(46, 125, 50);
+        Color rojo = new Color(198, 40, 40);
+        Color gris = new Color(90, 99, 110);
+
+        panelPrincipal.setBackground(fondo);
+
+        Font fuenteBase = new Font("Segoe UI", Font.PLAIN, 14);
+        Font fuenteBoton = new Font("Segoe UI", Font.BOLD, 13);
+
+        nombreTextField.setFont(fuenteBase);
+        emailTextField.setFont(fuenteBase);
+        telefonoTextField.setFont(fuenteBase);
+
+        configurarBoton(guardarButton, verde);
+        configurarBoton(actualizarButton, azul);
+        configurarBoton(eliminarButton, rojo);
+        configurarBoton(limpiarButton, gris);
+        configurarBoton(serviciosButton, azul);
+        configurarBoton(reservasButton, azul);
+
+        tabla.setFont(fuenteBase);
+        tabla.setRowHeight(28);
+        tabla.getTableHeader().setFont(fuenteBoton);
+        tabla.getTableHeader().setBackground(new Color(224, 232, 244));
+        tabla.getTableHeader().setForeground(new Color(35, 45, 60));
+        tabla.setGridColor(new Color(220, 225, 232));
+        tabla.setSelectionBackground(new Color(207, 224, 247));
+        tabla.setSelectionForeground(Color.BLACK);
+    }
+
+    private void configurarBoton(JButton boton, Color color) {
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        boton.setBackground(color);
+        boton.setForeground(Color.WHITE);
+        boton.setFocusPainted(false);
+        boton.setBorderPainted(false);
+        boton.setOpaque(true);
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void conectarEventos() {
@@ -270,48 +316,48 @@ public class VentanaPrincipal extends JFrame {
      */
     private void $$$setupUI$$$() {
         panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(5, 42, new Insets(0, 0, 0, 0), -1, -1));
+        panelPrincipal.setLayout(new GridLayoutManager(5, 42, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
         label1.setText("Gestión de clientes");
         label1.setVerticalAlignment(1);
-        panelPrincipal.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 42, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(124, -1), null, 0, false));
+        panelPrincipal.add(label1, new GridConstraints(0, 0, 1, 42, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(124, -1), null, 0, false));
         final JLabel label2 = new JLabel();
         label2.setText("Nombre:");
-        panelPrincipal.add(label2, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(label2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         nombreTextField = new JTextField();
-        panelPrincipal.add(nombreTextField, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(250, -1), null, 0, false));
+        panelPrincipal.add(nombreTextField, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(250, -1), null, 0, false));
         final JLabel label3 = new JLabel();
         label3.setText("Teléfono:");
-        panelPrincipal.add(label3, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(label3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         telefonoTextField = new JTextField();
-        panelPrincipal.add(telefonoTextField, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        panelPrincipal.add(telefonoTextField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label4 = new JLabel();
         label4.setText("Email:");
-        panelPrincipal.add(label4, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(label4, new GridConstraints(1, 2, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         emailTextField = new JTextField();
-        panelPrincipal.add(emailTextField, new com.intellij.uiDesigner.core.GridConstraints(1, 4, 1, 4, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        panelPrincipal.add(emailTextField, new GridConstraints(1, 4, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        panelPrincipal.add(scrollPane1, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 42, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panelPrincipal.add(scrollPane1, new GridConstraints(4, 0, 1, 42, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         tabla = new JTable();
         scrollPane1.setViewportView(tabla);
         serviciosButton = new JButton();
         serviciosButton.setText("Servicios");
-        panelPrincipal.add(serviciosButton, new com.intellij.uiDesigner.core.GridConstraints(3, 37, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(serviciosButton, new GridConstraints(3, 37, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         guardarButton = new JButton();
         guardarButton.setText("Guardar");
-        panelPrincipal.add(guardarButton, new com.intellij.uiDesigner.core.GridConstraints(3, 2, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(guardarButton, new GridConstraints(3, 2, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         eliminarButton = new JButton();
         eliminarButton.setText("Eliminar");
-        panelPrincipal.add(eliminarButton, new com.intellij.uiDesigner.core.GridConstraints(3, 8, 1, 5, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(eliminarButton, new GridConstraints(3, 8, 1, 5, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         limpiarButton = new JButton();
         limpiarButton.setText("Limpiar");
-        panelPrincipal.add(limpiarButton, new com.intellij.uiDesigner.core.GridConstraints(3, 15, 1, 5, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(limpiarButton, new GridConstraints(3, 15, 1, 5, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         actualizarButton = new JButton();
         actualizarButton.setText("Actualizar");
-        panelPrincipal.add(actualizarButton, new com.intellij.uiDesigner.core.GridConstraints(3, 5, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(actualizarButton, new GridConstraints(3, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         reservasButton = new JButton();
         reservasButton.setText("Reservas");
-        panelPrincipal.add(reservasButton, new com.intellij.uiDesigner.core.GridConstraints(3, 22, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(reservasButton, new GridConstraints(3, 22, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -320,4 +366,5 @@ public class VentanaPrincipal extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return panelPrincipal;
     }
+
 }
