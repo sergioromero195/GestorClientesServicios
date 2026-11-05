@@ -29,6 +29,9 @@ public class ReservaDAO {
     }
 
     public Reserva buscarPorId(Long id) {
+
+        validarId(id);
+
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
         EntityManager em = fabrica.createEntityManager();
@@ -139,6 +142,9 @@ public class ReservaDAO {
     }
 
     public boolean eliminar(Long id) {
+
+        validarId(id);
+
         EntityManagerFactory fabrica =
                 JpaUtil.getEntityManagerFactory();
         EntityManager em = fabrica.createEntityManager();
@@ -205,6 +211,15 @@ public class ReservaDAO {
         }
         if (reserva.getServicio() == null || reserva.getServicio().getId() == null) {
             throw new IllegalArgumentException("La reserva debe tener un servicio con ID.");
+        }
+    }
+
+    private void validarId(Long id) {
+
+        if (id == null) {
+            throw new IllegalArgumentException(
+                    "El ID de la reserva no puede ser null."
+            );
         }
     }
 }
