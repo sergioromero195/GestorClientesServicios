@@ -321,6 +321,8 @@ public class VentanaReservas extends JFrame {
 
         if (fila < 0) {
 
+            reservaSeleccionadaId = null;
+
             return;
         }
 
