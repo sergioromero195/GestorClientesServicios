@@ -172,6 +172,7 @@ public class VentanaPrincipal extends JFrame {
     private void mostrarClienteSeleccionado() {
         int fila = tabla.getSelectedRow();
         if (fila < 0) {
+            clienteSeleccionadoId = null;
             return;
         }
 

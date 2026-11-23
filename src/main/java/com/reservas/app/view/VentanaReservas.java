@@ -320,6 +320,7 @@ public class VentanaReservas extends JFrame {
         int fila = reservasTabla.getSelectedRow();
 
         if (fila < 0) {
+
             return;
         }
 
@@ -327,6 +328,7 @@ public class VentanaReservas extends JFrame {
         Reserva reserva = reservaController.buscarReserva(id);
 
         if (reserva == null) {
+            reservaSeleccionadaId = null;
             return;
         }
 

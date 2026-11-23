@@ -227,6 +227,7 @@ public class VentanaServicios extends JFrame {
         int fila = serviciosTabla.getSelectedRow();
 
         if (fila < 0) {
+            servicioSeleccionadoId = null;
             return;
         }
 
