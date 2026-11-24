@@ -35,3 +35,21 @@ Desde la ventana principal se puede acceder a la gestión de clientes, servicios
 - `model`: entidades Cliente, Servicio y Reserva.
 - `service`: lógica de gestión y validaciones.
 - `view`: ventanas de la aplicación.
+
+## Ejecutar el JAR
+
+Se necesita tener Java 21 o posterior y MySQL Server instalado y en ejecución.
+
+1. Abre `database.sql` en MySQL Workbench y ejecútalo para crear la base de datos y sus tablas.
+2. Abre PowerShell en la carpeta principal del proyecto.
+3. Configura las credenciales de tu usuario de MySQL para esa sesión. Sustituye los ejemplos por tus propios datos:
+
+   ```powershell
+   $env:DB_USER = "usuario_mysql"
+   $env:DB_PASSWORD = "contraseña_mysql"
+   
+4. En esa misma ventana de PowerShell, inicia la aplicación:
+
+   ```powershell
+   java -jar .\target\gestor-reservas-1.0-SNAPSHOT-shaded.jar
+   ```

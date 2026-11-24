@@ -1,6 +1,6 @@
 # Pruebas del programa
 
-He probado algunas opciones para comprobar que la aplicación guarda los datos correctamente y avisa cuando hay algún problema.
+- Probé algunas opciones para comprobar que la aplicación guarda los datos correctamente y avisa cuando hay algún problema.
 
 ## Clientes
 
@@ -34,3 +34,7 @@ He probado algunas opciones para comprobar que la aplicación guarda los datos c
 ## descripción de servicio de más de 255 caracteres.
 
 - Probé una descripcion de servicios de 256 caracteres y me avisó de no poder superar el límite de 255.
+
+## Prueba del ejecutable
+
+- Abrí el programa usando el JAR generado. La aplicación se inició, se conectó con MySQL y pude guardar un cliente correctamente.
