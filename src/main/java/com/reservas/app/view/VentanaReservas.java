@@ -448,12 +448,19 @@ public class VentanaReservas extends JFrame {
     private Reserva leerFormulario() {
         LocalDate fecha;
 
+        String textoFecha = fechaField.getText().trim();
+
+        if (!textoFecha.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            throw new IllegalArgumentException(
+                    "Escribe la fecha con el formato AAAA-MM-DD, por ejemplo 2026-10-28."
+            );
+        }
+
         try {
-            fecha = LocalDate.parse(fechaField.getText().trim());
+            fecha = LocalDate.parse(textoFecha);
         } catch (DateTimeParseException error) {
             throw new IllegalArgumentException(
-                    "Escribe la fecha con el formato AAAA-MM-DD, "
-                            + "por ejemplo 2026-10-28."
+                    "La fecha indicada no existe. Comprueba el día y el mes."
             );
         }
 

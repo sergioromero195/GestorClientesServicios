@@ -67,6 +67,12 @@ public class ClienteDAO {
 
           tx.begin();
 
+          if (existeEmail(em, cliente.getEmail(), null)) {
+              throw new IllegalArgumentException(
+                      "Ya existe un cliente con ese email."
+              );
+          }
+
           em.persist(cliente);
 
           tx.commit();
@@ -110,6 +116,16 @@ public class ClienteDAO {
             if (existente == null) {
                 tx.rollback();
                 return false;
+            }
+
+            if (existeEmail(
+                    em,
+                    datosNuevos.getEmail(),
+                    datosNuevos.getId()
+            )) {
+                throw new IllegalArgumentException(
+                        "Ya existe otro cliente con ese email."
+                );
             }
 
             existente.setNombre(datosNuevos.getNombre());
@@ -176,6 +192,29 @@ public class ClienteDAO {
         }
     }
 
+    private boolean existeEmail(
+            EntityManager em,
+            String email,
+            Long idIgnorado
+    ) {
+        String jpql =
+                "SELECT COUNT(c) FROM Cliente c "
+                        + "WHERE LOWER(c.email) = LOWER(:email)";
+
+        if (idIgnorado != null) {
+            jpql += " AND c.id <> :idIgnorado";
+        }
+
+        var consulta = em.createQuery(jpql, Long.class)
+                .setParameter("email", email);
+
+        if (idIgnorado != null) {
+            consulta.setParameter("idIgnorado", idIgnorado);
+        }
+
+        return consulta.getSingleResult() > 0;
+    }
+
     private void validarDatosCliente(Cliente cliente) {
 
         if (cliente == null) {
@@ -219,7 +258,7 @@ public class ClienteDAO {
         }
 
         if (!cliente.getEmail().matches(
-                "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+                "^[A-Za-z0-9+_-]+(?:\\.[A-Za-z0-9+_-]+)*@[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)+$")) {
             throw new IllegalArgumentException(
                     "El email debe tener un formato válido."
             );
@@ -227,7 +266,7 @@ public class ClienteDAO {
 
         if (cliente.getTelefono() != null
                 && !cliente.getTelefono().isBlank()
-                && !cliente.getTelefono().matches("[0-9+() -]{7,20}")) {
+                && !cliente.getTelefono().matches("(?=.*\\d)[0-9+() -]{7,20}")) {
             throw new IllegalArgumentException(
                     "El teléfono no tiene un formato válido."
             );

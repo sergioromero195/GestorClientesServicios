@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ServicioDAO {
@@ -175,9 +176,10 @@ public class ServicioDAO {
         // Limpiar espacios
         servicio.setNombre(servicio.getNombre().trim());
 
-        if (servicio.getDescripcion() != null) {
-            servicio.setDescripcion(
-                    servicio.getDescripcion().trim()
+        if (servicio.getDescripcion() != null
+                && servicio.getDescripcion().length() > 255) {
+            throw new IllegalArgumentException(
+                    "La descripción no puede superar los 255 caracteres."
             );
         }
 
@@ -187,9 +189,9 @@ public class ServicioDAO {
             );
         }
 
-        if (servicio.getPrecio() == null) {
+        if (servicio.getPrecio().compareTo(new BigDecimal("99999999.99")) > 0) {
             throw new IllegalArgumentException(
-                    "El precio del servicio es obligatorio."
+                    "El precio no puede superar 99.999.999,99."
             );
         }
 
