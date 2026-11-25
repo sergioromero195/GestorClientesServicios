@@ -36,5 +36,5 @@ SET @jardineria_id = (
 
 INSERT INTO reservas (fecha_reserva, estado, cliente_id, servicio_id)
 VALUES
-    ('2026-12-02', 'Pendiente', @ana_id, @limpieza_id),
-    ('2026-12-03', 'Confirmada', @luis_id, @jardineria_id);
+    (DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY), 'Pendiente', @ana_id, @limpieza_id),
+    (DATE_ADD(CURRENT_DATE, INTERVAL 8 DAY), 'Confirmada', @luis_id, @jardineria_id);
