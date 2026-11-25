@@ -189,6 +189,12 @@ public class ServicioDAO {
             );
         }
 
+        if (servicio.getPrecio() == null) {
+            throw new IllegalArgumentException(
+                    "El precio es obligatorio."
+            );
+        }
+
         if (servicio.getPrecio().compareTo(new BigDecimal("99999999.99")) > 0) {
             throw new IllegalArgumentException(
                     "El precio no puede superar 99.999.999,99."

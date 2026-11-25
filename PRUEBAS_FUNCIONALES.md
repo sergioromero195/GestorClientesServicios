@@ -37,4 +37,5 @@
 
 ## Prueba del ejecutable
 
-- Abrí el programa usando el JAR generado. La aplicación se inició, se conectó con MySQL y pude guardar un cliente correctamente.
+- Ejecuté `mvn clean package`; Maven terminó con `BUILD SUCCESS`.
+- Abrí el programa usando el JAR generado. La aplicación se inició correctamente.nectó con MySQL y pude guardar un cliente correctamente.
