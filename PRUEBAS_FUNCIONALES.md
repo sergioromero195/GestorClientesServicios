@@ -10,6 +10,7 @@
 ## Servicios
 
 - Escribí un precio con más de dos decimales. La aplicación lo rechazó y mostró un aviso.
+- Dejé el precio vacío y pulsé Guardar. La aplicación mostró «El precio es obligatorio» y no guardó el servicio.
 
 ## Reservas
 
