@@ -6,12 +6,13 @@
 
 - Dejé el nombre vacío y pulsé Guardar. La aplicación no guardó el cliente y mostró el mensaje «El nombre es obligatorio».
 - Escribí un email sin formato válido. La aplicación lo rechazó y avisó de que el formato del email no era válido.
+- Guardé un cliente con datos válidos y apareció en la tabla de clientes.
 
 ## Servicios
 
 - Escribí un precio con más de dos decimales. La aplicación lo rechazó y mostró un aviso.
 - Dejé el precio vacío y pulsé Guardar. La aplicación mostró «El precio es obligatorio» y no guardó el servicio.
-
+- Guardé un servicio con datos válidos y apareció en la tabla de servicios.
 ## Reservas
 
 - Probé una fecha pasada. La aplicación no permitió guardar la reserva.
@@ -20,7 +21,7 @@
 - Desmarqué una reserva y pulsé Actualizar o Eliminar. La aplicación me pidió seleccionar un registro.
 - Seleccioné una reserva y pulsé Actualizar. La aplicación mostró que el registro se había actualizado.
 - Seleccioné una reserva y pulsé Eliminar. La aplicación pidió confirmar antes de borrarla.
-
+- Creé una reserva con una fecha futura, un cliente y un servicio existentes. Apareció en la tabla de reservas.
 ## Email duplicado
 
 - Intenté guardar un cliente usando un email que ya existía. La aplicación lo rechazó y avisó de que ese email ya existe.
